@@ -1,0 +1,20 @@
+{
+  "name": "gerbeur",
+  "version": "1.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf node_modules yarn.lock",
+    "build": "tsc",
+    "preversion": "test -z \"$(git diff-index --name-only HEAD --)\"",
+    "postversion": "git push --tags && git push && echo \"Successfully released version $npm_package_version!\"",
+    "release": "yarn version"
+  },
+  "dependencies": {
+    "@polkadot/api": "9.3.3"
+  },
+  "devDependencies": {
+    "typescript": "4.8.4"
+  }
+}
