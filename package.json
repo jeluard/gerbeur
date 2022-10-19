@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "files": ["dist", "src"],
   "scripts": {
     "clean": "rm -rf node_modules yarn.lock",
     "build": "tsc",
