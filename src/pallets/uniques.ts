@@ -5,6 +5,17 @@ function unwrap(result: any) {
     return result.unwrapOr(undefined)?.toHuman();
 }
 
+export type Constants = {
+    attributeDepositBase: number,
+    collectionDeposit: number,
+    depositPerByte: number,
+    itemDeposit: number,
+    keyLimit: number,
+    metadataDepositBase: number,
+    stringLimit: number,
+    valueLimit: number
+}
+
 /**
  * Main entry point to manipulate [Uniques pallet](https://github.com/paritytech/substrate/blob/master/frame/uniques/)
  */
@@ -14,6 +25,24 @@ export class Uniques {
 
     constructor(api: ApiPromise) {
         this.api = api;
+    }
+
+    /**
+     * These can only be changed as part of a runtime upgrade.
+     * 
+     * @see https://polkadot.js.org/docs/substrate/constants/#uniques
+     */
+    get constants() {
+        return {
+            attributeDepositBase: this.api.consts.uniques.attributeDepositBase,
+            collectionDeposit: this.api.consts.uniques.collectionDeposit,
+            depositPerByte: this.api.consts.uniques.depositPerByte,
+            itemDeposit: this.api.consts.uniques.itemDeposit,
+            keyLimit: this.api.consts.uniques.keyLimit,
+            metadataDepositBase: this.api.consts.uniques.metadataDepositBase,
+            stringLimit: this.api.consts.uniques.stringLimit,
+            valueLimit: this.api.consts.uniques.valueLimit,
+        };
     }
 
     /**
