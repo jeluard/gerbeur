@@ -16,8 +16,21 @@ export class Uniques {
         this.api = api;
     }
 
+    /**
+     * @param id 
+     * @returns an identified `Collection`
+     */
     collection(id: number): Collection {
         return new Collection(this.api, id);
+    }
+
+    /**
+     * @returns all `Collection`s
+     */
+    async allCollections(): Promise<Array<Collection>> {
+        const collections: Array<Array<Array<string>>> = unwrap(await this.api.query.uniques.class(null));
+        console.log(collections)
+        return collections.map(([[[id]]]) => this.collection(Number.parseInt(id)));
     }
 
 }
@@ -97,10 +110,22 @@ export class Collection {
 
     /**
      * @param id 
-     * @returns an `Item` from this Collection
+     * @returns an identified `Item` from this Collection
      */
     item(id: number): Item {
         return new Item(this.api, this.id, id);
+    }
+
+    /**
+     * @returns all `Item`s for this `Collection`
+     */
+    async allItems(): Promise<Array<Item>> {
+        const items: Array<Array<Array<[string, string]>>> = unwrap(await this.api.query.uniques.asset(this.id));
+        return items.map(([[[_, itemId]]]) => this.item(Number.parseInt(itemId)));
+    }
+
+    toSring(): string {
+        return `Collection #${this.id}`;
     }
 
 }
